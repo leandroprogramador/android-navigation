@@ -7,13 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.alura.aluraesporte.R
+import br.com.alura.aluraesporte.ui.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.login.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
 
     private val controller by lazy{
         findNavController()
     }
+
+    private val viewModel : LoginViewModel by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -23,9 +27,18 @@ class LoginFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        login_botao_logar.setOnClickListener {
-            val direction = LoginFragmentDirections.actionLoginToListaProdutos()
-            controller.navigate(direction)
+
+        if(viewModel.isLogged()){
+            goToProductsListScreen()
         }
+        login_botao_logar.setOnClickListener {
+            viewModel.login()
+            goToProductsListScreen()
+        }
+    }
+
+    private fun goToProductsListScreen() {
+        val direction = LoginFragmentDirections.actionLoginToListaProdutos()
+        controller.navigate(direction)
     }
 }
