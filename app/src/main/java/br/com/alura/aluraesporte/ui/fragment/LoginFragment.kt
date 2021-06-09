@@ -27,10 +27,6 @@ class LoginFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        if(viewModel.isLogged()){
-            goToProductsListScreen()
-        }
         login_botao_logar.setOnClickListener {
             viewModel.login()
             goToProductsListScreen()
