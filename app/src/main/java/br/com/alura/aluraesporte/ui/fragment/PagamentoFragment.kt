@@ -1,9 +1,7 @@
 package br.com.alura.aluraesporte.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -13,6 +11,7 @@ import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
 import br.com.alura.aluraesporte.model.Pagamento
 import br.com.alura.aluraesporte.model.Produto
+import br.com.alura.aluraesporte.ui.viewmodel.LoginViewModel
 import br.com.alura.aluraesporte.ui.viewmodel.PagamentoViewModel
 import kotlinx.android.synthetic.main.pagamento.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -21,13 +20,14 @@ private const val FALHA_AO_CRIAR_PAGAMENTO = "Falha ao criar pagamento"
 private const val COMPRA_REALIZADA = "Compra realizada"
 
 
-class PagamentoFragment : Fragment() {
+class PagamentoFragment : BaseFragment() {
 
     private val argumentos by navArgs<PagamentoFragmentArgs>()
     private val produtoId by lazy {
         argumentos.produtoId
     }
     private val viewModel: PagamentoViewModel by viewModel()
+
     private lateinit var produtoEscolhido: Produto
     private val controlador by lazy {
         findNavController()
@@ -49,6 +49,13 @@ class PagamentoFragment : Fragment() {
         configuraBotaoConfirmaPagamento()
         buscaProduto()
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+
 
     private fun buscaProduto() {
         viewModel.buscaProdutoPorId(produtoId).observe(this, Observer {
@@ -109,5 +116,7 @@ class PagamentoFragment : Fragment() {
     } catch (e: NumberFormatException) {
         null
     }
+
+
 
 }
