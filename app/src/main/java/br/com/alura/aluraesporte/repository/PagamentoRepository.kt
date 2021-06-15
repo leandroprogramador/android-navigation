@@ -2,8 +2,10 @@ package br.com.alura.aluraesporte.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.room.Query
 import br.com.alura.aluraesporte.database.dao.PagamentoDAO
 import br.com.alura.aluraesporte.model.Pagamento
+import br.com.alura.aluraesporte.ui.fragment.PagamentoFragmentDirections
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -22,5 +24,9 @@ class PagamentoRepository(private val dao: PagamentoDAO) {
             }
         }
     }
+
+    fun todos() : LiveData<List<Pagamento>> = dao.todos()
+
+
 
 }
